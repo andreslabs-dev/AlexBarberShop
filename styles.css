@@ -1,0 +1,507 @@
+/* =========================================================
+   ALEX BARBERSHOP · styles.css
+   ========================================================= */
+:root {
+  --navy: #0b1f4b;
+  --navy-dark: #05080f;
+  --red: #d61f26;
+  --gray: #d6dae1;
+  --light: #eceef2;
+  --white: #ffffff;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'Anton', Impact, 'Arial Narrow', sans-serif;
+  background: var(--white);
+  color: var(--navy);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+button { font-family: inherit; border: none; background: none; color: inherit; }
+
+/* Cursor estándar del sistema en elementos interactivos */
+button,
+[data-go],
+[data-back],
+.card,
+.slot,
+.day,
+.arrow,
+.btn-red {
+  cursor: pointer;
+}
+
+/* ================= VISTAS (SPA) ================= */
+.app { position: relative; min-height: 100vh; }
+
+.view {
+  position: relative;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: 7rem 6vw 5rem;
+  overflow: hidden;
+  background: var(--white);
+}
+
+.view.active {
+  display: flex;
+  animation: viewIn 500ms ease-in-out both;
+}
+
+@keyframes viewIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= FRANJAS DIAGONALES EN ESQUINAS ================= */
+.stripes {
+  position: absolute;
+  z-index: 3;
+  width: min(24vw, 300px);
+  height: min(12vw, 130px);
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    135deg,
+    var(--navy) 0 16px,
+    #ffffff 16px 22px,
+    var(--red) 22px 38px,
+    #ffffff 38px 44px
+  );
+}
+
+.stripes-tl { top: 0; left: 0; clip-path: polygon(0 0, 100% 0, 0 100%); }
+.stripes-tr { top: 0; right: 0; clip-path: polygon(0 0, 100% 0, 100% 100%); }
+.stripes-bl { bottom: 0; left: 0; clip-path: polygon(0 0, 0 100%, 100% 100%); }
+.stripes-br { bottom: 0; right: 0; clip-path: polygon(100% 0, 100% 100%, 0 100%); }
+
+/* ================= BOTÓN ATRÁS ================= */
+.back {
+  position: absolute;
+  top: 6.5rem;
+  left: 6vw;
+  z-index: 5;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--navy);
+  padding: 0.4rem 0.6rem;
+  transition: color 400ms ease-in-out, transform 400ms ease-in-out;
+}
+
+.back:hover { color: var(--red); transform: scale(1.02); }
+
+/* ================= HOME / HERO ================= */
+#home {
+  height: 100vh;
+  min-height: 100vh;
+  padding: 0 8vw;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: #111;
+  color: var(--white);
+}
+
+/* >>> PEGA AQUÍ TU IMAGEN BASE64 DEL FONDO HERO <<<
+   Reemplaza [PEGAR_BASE64_FONDO_HERO_AQUI] por la cadena Base64 (sin saltos de línea).
+   Si la dejas así, se verá el color de respaldo #111. */
+.hero {
+  position: absolute;
+  inset: 0;
+  height: 100vh;
+  z-index: 0;
+  background-color: #111;
+  background-image: url('data:image/jpeg;base64,[PEGAR_BASE64_FONDO_HERO_AQUI]');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: heroZoom 1.8s ease-in-out both;
+}
+
+@keyframes heroZoom {
+  from { transform: scale(1.08); }
+  to   { transform: scale(1); }
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    rgba(5, 8, 15, 0.92) 0%,
+    rgba(5, 8, 15, 0.6) 55%,
+    rgba(5, 8, 15, 0.25) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+}
+
+.hero-title {
+  font-weight: 400;
+  font-size: clamp(2.6rem, 7vw, 6rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin-bottom: 2.4rem;
+}
+
+.hero-title .red { display: block; color: var(--red); }
+
+/* ================= BOTONES ================= */
+.btn-red {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: var(--red);
+  color: var(--white);
+  padding: 1.05rem 2.2rem;
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  box-shadow: 0 10px 24px -10px rgba(214, 31, 38, 0.7);
+  transition: transform 400ms ease-in-out, box-shadow 400ms ease-in-out, background 400ms ease-in-out;
+}
+
+.btn-red svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+.btn-red:hover {
+  transform: scale(1.02);
+  box-shadow: 0 18px 30px -12px rgba(214, 31, 38, 0.85);
+}
+
+.btn-red:disabled {
+  background: #b9bec8;
+  box-shadow: none;
+  transform: none;
+  cursor: not-allowed;
+}
+
+/* ================= ENCABEZADOS DE PASO ================= */
+.step-header {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.step-title {
+  font-weight: 400;
+  font-size: clamp(2rem, 5.5vw, 4rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.step-title .red { color: var(--red); }
+
+.step-title::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 4px;
+  background: var(--red);
+  margin: 0.9rem auto 0;
+}
+
+.step-footer {
+  position: relative;
+  z-index: 2;
+  margin-top: 3rem;
+}
+
+/* ================= CARRUSEL ================= */
+.carousel {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+.arrow {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--red);
+  color: var(--white);
+  font-size: 2rem;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 18px -8px rgba(214, 31, 38, 0.8);
+  transition: transform 400ms ease-in-out, box-shadow 400ms ease-in-out;
+}
+
+.arrow:hover {
+  transform: scale(1.02);
+  box-shadow: 0 14px 24px -10px rgba(214, 31, 38, 0.9);
+}
+
+.cards {
+  display: flex;
+  gap: 2.2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  position: relative;
+  width: 240px;
+  height: 360px;
+  background: var(--gray);
+  border: 3px solid transparent;
+  border-radius: 4px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1.6rem 1rem;
+  overflow: hidden;
+  text-align: center;
+  user-select: none;
+  box-shadow: 0 10px 24px -14px rgba(11, 31, 75, 0.45);
+  transition: transform 400ms ease-in-out, box-shadow 400ms ease-in-out, border-color 400ms ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 22px 34px -14px rgba(11, 31, 75, 0.5);
+}
+
+.card.selected { border-color: var(--red); }
+
+.card.enter { animation: cardIn 500ms ease-in-out backwards; }
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Tarjetas de servicio: fotografía oscurecida.
+   Cada tarjeta lleva su marcador Base64 en el atributo style del HTML/JS. */
+.card-photo {
+  position: absolute;
+  inset: 0;
+  background-color: #cccccc;   /* respaldo mientras pegas la imagen */
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.45);
+  transition: transform 600ms ease-in-out;
+}
+
+.card:hover .card-photo { transform: scale(1.05); }
+
+.card-label {
+  position: relative;
+  z-index: 2;
+  font-size: 1.15rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--navy);
+  padding: 0.5rem 0.6rem;
+}
+
+.card.has-photo .card-label { color: var(--white); }
+
+/* ================= DECORACIONES FLOTANTES (Base64) =================
+   Marcadores para pegar cada imagen. Si no pegas nada, no se ve nada
+   (el diseño sigue funcionando). */
+.deco {
+  position: absolute;
+  z-index: 1;
+  opacity: 0.12;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  mix-blend-mode: multiply;
+}
+
+/* POSTE DE BARBERO: pega [PEGAR_BASE64_POSTE_BARBERO_AQUI] */
+.deco-pole {
+  right: 2vw;
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(60px, 9vw, 120px);
+  height: min(70vh, 480px);
+  background-image: url('data:image/png;base64,[PEGAR_BASE64_POSTE_BARBERO_AQUI]');
+}
+
+/* NAVAJA: pega [PEGAR_BASE64_NAVAJA_AQUI] */
+.deco-razor {
+  left: 3vw;
+  bottom: 6vh;
+  width: min(22vw, 280px);
+  height: min(22vw, 280px);
+  background-image: url('data:image/png;base64,[PEGAR_BASE64_NAVAJA_AQUI]');
+}
+
+/* MÁQUINA DE CORTAR (lado izquierdo): pega [PEGAR_BASE64_MAQUINA_CORTE_AQUI] */
+.deco-clipper-left {
+  left: 3vw;
+  bottom: 6vh;
+  width: min(24vw, 320px);
+  height: min(24vw, 320px);
+  background-image: url('data:image/png;base64,[PEGAR_BASE64_MAQUINA_CORTE_AQUI]');
+}
+
+/* MÁQUINA DE CORTAR (lado derecho): usa el mismo marcador */
+.deco-clipper-right {
+  right: 6vw;
+  bottom: 8vh;
+  width: min(24vw, 320px);
+  height: min(24vw, 320px);
+  background-image: url('data:image/png;base64,[PEGAR_BASE64_MAQUINA_CORTE_AQUI]');
+}
+
+/* ================= PASO 3: AGENDAMIENTO ================= */
+.schedule {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 3rem;
+  width: min(1000px, 92vw);
+  align-items: start;
+}
+
+.calendar-box {
+  background: var(--light);
+  border-radius: 6px;
+  padding: 1.6rem;
+  box-shadow: 0 14px 30px -18px rgba(11, 31, 75, 0.4);
+}
+
+.month-title {
+  font-weight: 400;
+  font-size: 1.6rem;
+  text-align: center;
+  letter-spacing: 0.06em;
+  margin-bottom: 1rem;
+}
+
+.weekdays,
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  text-align: center;
+}
+
+.weekdays span { font-size: 0.9rem; opacity: 0.7; padding: 0.3rem 0; }
+
+.day {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--navy);
+  font-size: 0.95rem;
+  transition: transform 400ms ease-in-out, box-shadow 400ms ease-in-out, background 400ms ease-in-out, color 400ms ease-in-out;
+}
+
+.day:hover { transform: scale(1.02); box-shadow: 0 10px 18px -10px rgba(11, 31, 75, 0.5); background: var(--white); }
+
+.day.selected { background: var(--red); color: var(--white); }
+
+.slots-box { padding-top: 0.4rem; }
+
+.slots-label { font-size: 1.1rem; letter-spacing: 0.08em; }
+
+.slots-date {
+  font-size: 0.85rem;
+  color: var(--red);
+  letter-spacing: 0.06em;
+  margin: 0.2rem 0 1.2rem;
+  text-transform: uppercase;
+}
+
+.slots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.7rem;
+  max-height: 340px;
+  overflow-y: auto;
+  padding: 0.3rem 0.3rem 0.3rem 0;
+}
+
+.slot {
+  padding: 0.7rem 0.4rem;
+  border: 1px solid #dde1e8;
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--navy);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  transition: transform 400ms ease-in-out, box-shadow 400ms ease-in-out, background 400ms ease-in-out, color 400ms ease-in-out;
+}
+
+.slot:hover { transform: scale(1.02); box-shadow: 0 12px 20px -12px rgba(11, 31, 75, 0.55); }
+
+.slot.selected {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+  box-shadow: 0 10px 20px -10px rgba(214, 31, 38, 0.8);
+}
+
+/* ================= TOAST ================= */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 2rem;
+  transform: translate(-50%, 160%);
+  background: var(--navy);
+  color: var(--white);
+  padding: 1rem 1.6rem;
+  border-left: 6px solid var(--red);
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  text-align: center;
+  max-width: 90vw;
+  z-index: 9000;
+  transition: transform 500ms ease-in-out;
+}
+
+.toast.show { transform: translate(-50%, 0); }
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 860px) {
+  .schedule { grid-template-columns: 1fr; gap: 2rem; }
+  .slots { grid-template-columns: repeat(2, 1fr); }
+  .card { width: 210px; height: 320px; }
+}
+
+@media (max-width: 560px) {
+  .carousel { gap: 0.6rem; }
+  .arrow { width: 44px; height: 44px; font-size: 1.6rem; }
+  .card { width: 34vw; height: 280px; padding: 1rem 0.4rem; }
+  .card-label { font-size: 0.85rem; padding: 0.3rem; }
+  .cards { gap: 0.6rem; }
+  .back { top: 5.5rem; left: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
+}
