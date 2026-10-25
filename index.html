@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Alex Barbershop | Reserva tu cita</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Barra superior con progreso (oculta en la portada) -->
+  <header class="barra en-inicio" id="barra">
+    <button class="marca" data-ir="inicio" aria-label="Ir al inicio">ALEX <span>BARBERSHOP</span></button>
+    <nav class="progreso" aria-label="Progreso de la reserva">
+      <span data-paso="barbero"></span>
+      <span data-paso="servicio"></span>
+      <span data-paso="fecha"></span>
+      <span data-paso="confirmar"></span>
+    </nav>
+  </header>
+
+  <!-- ===== Portada ===== -->
+  <section class="pantalla inicio activa" id="inicio" tabindex="-1">
+    <img src="tienda.PNG" alt="Fachada de Alex Barbershop" class="fondo">
+    <div class="velo"></div>
+    <div class="contenido-inicio">
+      <h1>
+        <span class="linea">EL ESTILO</span>
+        <span class="linea">COMIENZA</span>
+        <span class="linea">CON UN BUEN CORTE</span>
+      </h1>
+      <button class="btn btn-grande" data-ir="barbero">
+        <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        RESERVA AHORA
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== Paso 1: barbero ===== -->
+  <section class="pantalla paso" id="barbero" tabindex="-1">
+    <div class="franjas" aria-hidden="true"><i class="arriba"></i><i class="abajo"></i></div>
+    <div class="cabecera-paso">
+      <p class="numero">PASO 1.</p>
+      <h2>ESCOGE A TU BARBERO</h2>
+      <p class="subtitulo"><span class="azul">RESERVA</span> CON TU <span class="rojo">FAVORITO.</span></p>
+    </div>
+
+    <div class="opciones">
+      <button class="opcion" data-barbero="Barbero 1" style="--i:0">
+        <div class="foto"></div><span>BARBERO 1</span>
+      </button>
+      <button class="opcion" data-barbero="Barbero 2" style="--i:1">
+        <div class="foto"></div><span>BARBERO 2</span>
+      </button>
+      <button class="opcion" data-barbero="Barbero 3" style="--i:2">
+        <div class="foto"></div><span>BARBERO 3</span>
+      </button>
+    </div>
+
+    <p class="aviso" aria-live="polite"></p>
+    <div class="acciones">
+      <button class="btn secundario" data-ir="inicio">Atrás</button>
+      <button class="btn" data-continuar>Continuar</button>
+    </div>
+    <img src="navaja.png" alt="" class="decor decor-navaja" aria-hidden="true">
+  </section>
+
+  <!-- ===== Paso 2: servicio ===== -->
+  <section class="pantalla paso" id="servicio" tabindex="-1">
+    <div class="franjas" aria-hidden="true"><i class="arriba"></i><i class="abajo"></i></div>
+    <div class="cabecera-paso">
+      <p class="numero">PASO 2.</p>
+      <h2>ESCOGE EL SERVICIO QUE DESEES</h2>
+    </div>
+
+    <div class="opciones">
+      <button class="opcion" data-servicio="Servicio de corte" data-precio="25000" style="--i:0">
+        <div class="foto foto-corte"></div><span>SERVICIO DE CORTE</span><small>$25.000</small>
+      </button>
+      <button class="opcion" data-servicio="Barba" data-precio="15000" style="--i:1">
+        <div class="foto foto-barba"></div><span>BARBA</span><small>$15.000</small>
+      </button>
+      <button class="opcion" data-servicio="Servicio completo" data-precio="35000" style="--i:2">
+        <div class="foto foto-completo"></div><span>SERVICIO COMPLETO</span><small>$35.000</small>
+      </button>
+    </div>
+
+    <p class="aviso" aria-live="polite"></p>
+    <div class="acciones">
+      <button class="btn secundario" data-ir="barbero">Atrás</button>
+      <button class="btn" data-continuar>Continuar</button>
+    </div>
+    <img src="maquina.png" alt="" class="decor decor-maquina" aria-hidden="true">
+    <div class="poste" aria-hidden="true"></div>
+  </section>
+
+  <!-- ===== Paso 3: fecha y hora ===== -->
+  <section class="pantalla paso sin-franja-superior" id="fecha" tabindex="-1">
+    <div class="franjas" aria-hidden="true"><i class="abajo"></i></div>
+    <div class="cabecera-paso">
+      <p class="numero">PASO 3.</p>
+      <h2>ESCOGE FECHA Y HORA</h2>
+    </div>
+
+    <div class="fecha-grid">
+      <section class="caja calendario-caja">
+        <div class="cal-cabecera">
+          <button id="mes-anterior" aria-label="Mes anterior">&lsaquo;</button>
+          <strong id="mes-titulo"></strong>
+          <button id="mes-siguiente" aria-label="Mes siguiente">&rsaquo;</button>
+        </div>
+        <div class="cal-dias-semana">
+          <span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span>
+        </div>
+        <div class="cal-dias" id="calendario"></div>
+      </section>
+
+      <section class="caja horarios-caja">
+        <div class="horarios-cabecera">
+          <span class="reloj" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+          <div>
+            <h3>Horarios disponibles</h3>
+            <p class="fecha-elegida" id="fecha-elegida">Selecciona un día</p>
+          </div>
+        </div>
+        <div class="horarios" id="horarios"></div>
+      </section>
+    </div>
+
+    <ul class="ventajas" aria-hidden="true">
+      <li><span class="ico">▦</span><strong>RESERVA</strong><small>RÁPIDA</small></li>
+      <li><span class="ico">◷</span><strong>SIN ESPERAS</strong><small>INNECESARIAS</small></li>
+      <li><span class="ico">★</span><strong>TU TIEMPO</strong><small>VALE</small></li>
+    </ul>
+
+    <p class="aviso" aria-live="polite"></p>
+    <div class="acciones">
+      <button class="btn secundario" data-ir="servicio">Atrás</button>
+      <button class="btn" data-continuar>Revisar reserva</button>
+    </div>
+  </section>
+
+  <!-- ===== Resumen y confirmación ===== -->
+  <section class="pantalla paso" id="confirmar" tabindex="-1">
+    <div class="franjas" aria-hidden="true"><i class="arriba"></i><i class="abajo"></i></div>
+    <div class="cabecera-paso">
+      <h2 id="titulo-confirmar">TU RESERVA</h2>
+    </div>
+
+    <div class="bloque-resumen" id="bloque-resumen">
+      <section class="caja resumen">
+        <dl>
+          <dt>Barbero</dt><dd id="r-barbero">—</dd>
+          <dt>Servicio</dt><dd id="r-servicio">—</dd>
+          <dt>Fecha</dt><dd id="r-fecha">—</dd>
+          <dt>Hora</dt><dd id="r-hora">—</dd>
+        </dl>
+      </section>
+      <p class="aviso" aria-live="polite"></p>
+      <div class="acciones">
+        <button class="btn secundario" data-ir="fecha">Cambiar</button>
+        <button class="btn" id="confirmar-btn">Confirmar reserva</button>
+      </div>
+    </div>
+
+    <section class="caja exito" id="exito" hidden>
+      <p class="check">✓</p>
+      <h3>¡Cita confirmada!</h3>
+      <p id="exito-texto"></p>
+      <button class="btn" id="nueva">Nueva reserva</button>
+    </section>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
